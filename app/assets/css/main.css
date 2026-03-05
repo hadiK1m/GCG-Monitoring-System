@@ -1,0 +1,82 @@
+@import "tailwindcss";
+@import "@nuxt/ui";
+
+/*
+ * GCG Monitoring System — Color Palette
+ * ─────────────────────────────────────
+ * Primary:  #125d72  rgb(18,93,114)
+ * Accent:   #14a2ba  rgb(20,162,186)
+ * Light:    #e7f6f9  rgb(231,246,249)
+ * Yellow:   #efe62f  rgb(239,230,47)
+ * Neutral:  #d9d9d9  rgb(217,217,217)
+ */
+@theme {
+  --color-gcg-primary: #125d72;
+  --color-gcg-accent: #14a2ba;
+  --color-gcg-light: #e7f6f9;
+  --color-gcg-yellow: #efe62f;
+  --color-gcg-neutral: #d9d9d9;
+  --color-gcg-dark: #09303b;
+
+  /* Primary shade variants */
+  --color-gcg-primary-dark: #0e4a5b;
+  --color-gcg-primary-light: #167a96;
+}
+
+/* ─── UI Variable Overrides ───────────────────────────── */
+/* Light mode */
+:root {
+  --ui-border-accented: var(--color-gcg-neutral);
+  --ui-border-inverted: var(--color-gcg-accent);
+  --ui-color-primary: var(--color-gcg-primary);
+  --ui-text-default: #09303b;
+  --ui-text-dimmed: #09303b;
+  --ui-text-muted: #6b7280;
+  --ui-text-highlighted: #09303b;
+}
+
+/* Dark mode */
+.dark {
+  --ui-border-accented: #525252;
+  --ui-border-inverted: var(--color-gcg-accent);
+  --ui-color-primary: var(--color-gcg-accent);
+  --ui-text-default: #e5e5e5;
+  --ui-text-dimmed: #a3a3a3;
+  --ui-text-muted: #737373;
+  --ui-text-highlighted: #f5f5f5;
+}
+
+/* ─── Sidebar Scrollbar (Deep Teal) ───────────────────── */
+/* Applies only to elements with the `gcg-scrollbar` class */
+.gcg-scrollbar {
+  scrollbar-width: thin; /* Firefox */
+  scrollbar-color: color-mix(in srgb, var(--color-gcg-primary) 10%, transparent) transparent;
+}
+
+.gcg-scrollbar::-webkit-scrollbar {
+  width: 10px;
+}
+
+.gcg-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.gcg-scrollbar::-webkit-scrollbar-thumb {
+  background: color-mix(in srgb, var(--color-gcg-primary) 10%, transparent);
+  border-radius: 999px;
+  border: 3px solid transparent;
+  background-clip: content-box;
+}
+
+.gcg-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: color-mix(in srgb, var(--color-gcg-primary) 50%, transparent);
+  background-clip: content-box;
+}
+
+/* Remove the up/down arrow buttons on WebKit scrollbars */
+.gcg-scrollbar::-webkit-scrollbar-button {
+  width: 0;
+  height: 0;
+  display: none;
+}
+ 
