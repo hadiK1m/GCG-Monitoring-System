@@ -4,6 +4,8 @@
   "private": true,
   "scripts": {
     "build": "prisma generate && nuxt build",
+    "db:migrate:all": "powershell -ExecutionPolicy Bypass -File ./scripts/push-prisma-both.ps1 -Mode migrate-deploy",
+    "db:push:all": "powershell -ExecutionPolicy Bypass -File ./scripts/push-prisma-both.ps1",
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
@@ -14,12 +16,14 @@
     "@prisma/adapter-pg": "^7.4.2",
     "@prisma/client": "^7.4.2",
     "bcryptjs": "^3.0.3",
+    "chart.js": "^4.5.1",
     "dotenv": "^17.3.1",
     "jose": "^6.2.0",
     "nuxt": "^4.3.1",
     "pg": "^8.20.0",
     "tailwindcss": "^4.2.1",
     "vue": "^3.5.29",
+    "vue-chartjs": "^5.3.3",
     "vue-router": "^4.6.4"
   },
   "packageManager": "pnpm@10.30.3+sha512.c961d1e0a2d8e354ecaa5166b822516668b7f44cb5bd95122d590dd81922f606f5473b6d23ec4a5be05e7fcd18e8488d47d978bbe981872f1145d06e9a740017",
