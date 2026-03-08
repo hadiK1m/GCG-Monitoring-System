@@ -1,7 +1,7 @@
 <!--
   LoginForm.vue
   Right-side login form with email/password fields,
-  remember me, forgot password, Google sign-in, and sign-up link.
+  remember me, Google sign-in, and sign-up link.
   Uses Nuxt UI components for consistent styling.
 -->
 <template>
