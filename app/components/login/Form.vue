@@ -72,19 +72,22 @@
           </UInput>
         </UFormField>
 
-        <!-- Remember Me & Forgot Password -->
-        <div class="flex items-center justify-between">
+        <!-- Remember Me -->
+        <div class="flex items-center">
           <UCheckbox
             v-model="state.rememberMe"
             label="Remember me"
             color="primary"
           />
-          <NuxtLink
-            to="/forgot-password"
-            class="text-sm font-semibold text-gcg-dark hover:text-gcg-accent transition-colors"
-          >
-            Forgot password
-          </NuxtLink>
+        </div>
+
+        <!-- General Error -->
+        <div
+          v-if="errors.general"
+          class="flex items-center gap-2 rounded-lg bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 px-4 py-3 text-sm text-red-700 dark:text-red-400"
+        >
+          <UIcon name="i-lucide-alert-circle" class="size-4 shrink-0" />
+          <span>{{ errors.general }}</span>
         </div>
 
         <!-- Sign In Button -->

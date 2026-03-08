@@ -134,6 +134,15 @@
         </div>
         <p v-if="errors.agreeTerms" class="text-red-500 text-xs -mt-2">{{ errors.agreeTerms }}</p>
 
+        <!-- General Error -->
+        <div
+          v-if="errors.general"
+          class="flex items-center gap-2 rounded-lg bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 px-4 py-3 text-sm text-red-700 dark:text-red-400"
+        >
+          <UIcon name="i-lucide-alert-circle" class="size-4 shrink-0" />
+          <span>{{ errors.general }}</span>
+        </div>
+
         <!-- Sign Up Button -->
         <UButton
           type="submit"

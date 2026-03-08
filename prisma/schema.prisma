@@ -1,0 +1,68 @@
+generator client {
+  provider = "prisma-client"
+  output   = "./generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum UserRole {
+  ADMIN
+  ASSESSOR
+  VIEWER
+}
+
+enum UserStatus {
+  ACTIVE
+  INACTIVE
+  SUSPENDED
+}
+
+model User {
+  id                  String     @id @default(uuid()) @db.Uuid
+  fullName            String
+  email               String     @unique
+  passwordHash        String
+  avatarUrl           String?
+  role                UserRole   @default(VIEWER)
+  status              UserStatus @default(ACTIVE)
+
+  // E2E Encryption (foundation)
+  publicKey           String?    @db.Text
+  encryptedPrivateKey String?    @db.Text
+  keyCreatedAt        DateTime?
+
+  // Quick-access login tracking
+  lastLoginAt         DateTime?
+  lastLoginIp         String?
+
+  // Timestamps
+  createdAt           DateTime   @default(now())
+  updatedAt           DateTime   @updatedAt
+
+  // Relations
+  loginLogs           LoginLog[]
+
+  @@map("users")
+}
+
+model LoginLog {
+  id          String      @id @default(uuid()) @db.Uuid
+  userId      String      @db.Uuid
+  ipAddress   String
+  userAgent   String?     @db.Text
+  status      LoginStatus @default(SUCCESS)
+  createdAt   DateTime    @default(now())
+
+  user        User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([createdAt])
+  @@map("login_logs")
+}
+
+enum LoginStatus {
+  SUCCESS
+  FAILED
+}

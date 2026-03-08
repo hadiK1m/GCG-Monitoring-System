@@ -63,11 +63,11 @@
           class="flex items-center gap-2 px-2 py-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors cursor-pointer"
         >
           <div class="size-8 rounded-full bg-gcg-primary flex items-center justify-center">
-            <span class="text-white text-sm font-semibold">A</span>
+            <span class="text-white text-sm font-semibold">{{ userInitial }}</span>
           </div>
           <div class="hidden lg:block text-left">
-            <p class="text-sm font-medium text-gcg-dark dark:text-white leading-tight">Admin User</p>
-            <p class="text-xs text-gray-500 dark:text-gray-400 leading-tight">admin@gcg.com</p>
+            <p class="text-sm font-medium text-gcg-dark dark:text-white leading-tight">{{ user?.fullName || 'User' }}</p>
+            <p class="text-xs text-gray-500 dark:text-gray-400 leading-tight">{{ user?.email || '' }}</p>
           </div>
           <UIcon name="i-lucide-chevron-down" class="hidden lg:block size-4 text-gray-400" />
         </button>
@@ -78,6 +78,11 @@
 
 <script setup lang="ts">
 const { toggleSidebar } = useSidebar()
+const { user, logout } = useAuth()
+
+const userInitial = computed(() =>
+  user.value?.fullName?.charAt(0).toUpperCase() || 'U',
+)
 
 // Dark mode
 const colorMode = useColorMode()
@@ -99,7 +104,7 @@ const userMenuItems = [
   [{
     label: 'Sign out',
     icon: 'i-lucide-log-out',
-    click: () => navigateTo('/login'),
+    onSelect: () => logout(),
   }],
 ]
 </script>
