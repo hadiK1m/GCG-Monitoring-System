@@ -26,7 +26,9 @@ export const sidebarNavigation: NavItem[] = [
         label: 'Kertas Kerja ACGS',
         icon: 'i-lucide-clipboard-list',
         children: [
-            { label: 'Daftar 193 pertanyaan', icon: 'i-lucide-list', to: '/dashboard/acgs/daftar-193-pertanyaan' },
+            { label: 'Pencapaian ACGS', icon: 'i-lucide-target', to: '/dashboard/pencapaian-acgs' },
+            { label: 'Tren Pencapaian', icon: 'i-lucide-trending-up', to: '/dashboard/tren-pencapaian' },
+            { label: 'Detail Pencapaian ACGS', icon: 'i-lucide-bar-chart-3', to: '/dashboard/detail-pencapaian-acgs' },
         ],
     },
 ]
