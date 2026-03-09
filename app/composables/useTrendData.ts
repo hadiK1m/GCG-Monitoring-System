@@ -63,14 +63,9 @@ export function useTrendData() {
   const allYearsRaw = computed(() => {
     const years = acgs.availableYears.value.map(y => y.value).sort((a, b) => a - b)
     return years.map((year) => {
-      const saved = acgs.selectedYear.value
-      acgs.selectedYear.value = year
-      const s = { ...acgs.summary.value }
-      const l1 = { ...acgs.level1Summary.value }
-      const l2 = { ...acgs.level2Summary.value }
-      const data = [...acgs.yearData.value]
-      acgs.selectedYear.value = saved
-      return { year, summary: s, level1: l1, level2: l2, data }
+      const summary = acgs.getSummaryForYear(year)
+      const data = acgs.getYearDataForYear(year)
+      return { year, summary, data }
     })
   })
 

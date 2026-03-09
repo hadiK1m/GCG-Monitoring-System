@@ -123,14 +123,9 @@ export function useDashboardData() {
 
   const previousYearSummary = computed(() => {
     const prevYear = acgs.selectedYear.value - 1
-    const prevData = acgs.availableYears.value.find(y => y.value === prevYear)
-    if (!prevData) return null
-
-    const savedYear = acgs.selectedYear.value
-    acgs.selectedYear.value = prevYear
-    const prev = { ...acgs.summary.value }
-    acgs.selectedYear.value = savedYear
-    return prev
+    const hasPrev = acgs.availableYears.value.some(y => y.value === prevYear)
+    if (!hasPrev) return null
+    return acgs.getSummaryForYear(prevYear)
   })
 
   const scoreChange = computed(() => {
@@ -148,10 +143,7 @@ export function useDashboardData() {
   const trendData = computed<TrendPoint[]>(() => {
     return acgs.availableYears.value
       .map((y) => {
-        const savedYear = acgs.selectedYear.value
-        acgs.selectedYear.value = y.value
-        const s = { ...acgs.summary.value }
-        acgs.selectedYear.value = savedYear
+        const s = acgs.getSummaryForYear(y.value)
         return {
           year: y.value,
           totalScore: s.totalScore,

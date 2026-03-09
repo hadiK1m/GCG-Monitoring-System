@@ -128,6 +128,33 @@ function computeSubtotal(data: AcgsSectionData[]): AcgsLevelSummary {
   }
 }
 
+/** Returns section data for a given year without mutating reactive state. */
+function getYearDataForYear(year: number): AcgsSectionData[] {
+  return MOCK_DATA.filter(d => d.year === year)
+}
+
+/** Returns summary for a given year without mutating reactive state. Safe for use inside computed. */
+function getSummaryForYear(year: number): AcgsYearSummary {
+  const yd = getYearDataForYear(year)
+  const l1 = computeSubtotal(yd.filter(d => d.level === 1))
+  const l2 = computeSubtotal(yd.filter(d => d.level === 2))
+  const gt = computeSubtotal(yd)
+  return {
+    totalScore: gt.achievedScore,
+    maxScore: gt.maxScore,
+    percentage: gt.percentage,
+    level1Score: l1.achievedScore,
+    level1Max: l1.maxScore,
+    level1Percentage: l1.percentage,
+    level2Score: l2.achievedScore,
+    level2Max: l2.maxScore,
+    level2Percentage: l2.percentage,
+    totalQuestions: gt.totalQuestions,
+    totalFulfilled: gt.achievedScore,
+    totalAOI: gt.aoiCount,
+  }
+}
+
 export function useAcgsSummary() {
   const latestYear = Math.max(...MOCK_DATA.map(d => d.year))
   const selectedYear = ref<number>(latestYear)
@@ -145,20 +172,7 @@ export function useAcgsSummary() {
   const level2Summary = computed(() => computeSubtotal(level2Data.value))
   const grandTotal = computed(() => computeSubtotal(yearData.value))
 
-  const summary = computed<AcgsYearSummary>(() => ({
-    totalScore: grandTotal.value.achievedScore,
-    maxScore: grandTotal.value.maxScore,
-    percentage: grandTotal.value.percentage,
-    level1Score: level1Summary.value.achievedScore,
-    level1Max: level1Summary.value.maxScore,
-    level1Percentage: level1Summary.value.percentage,
-    level2Score: level2Summary.value.achievedScore,
-    level2Max: level2Summary.value.maxScore,
-    level2Percentage: level2Summary.value.percentage,
-    totalQuestions: grandTotal.value.totalQuestions,
-    totalFulfilled: grandTotal.value.achievedScore,
-    totalAOI: grandTotal.value.aoiCount,
-  }))
+  const summary = computed<AcgsYearSummary>(() => getSummaryForYear(selectedYear.value))
 
   return {
     selectedYear,
@@ -170,5 +184,7 @@ export function useAcgsSummary() {
     level2Summary,
     grandTotal,
     summary,
+    getSummaryForYear,
+    getYearDataForYear,
   }
 }
